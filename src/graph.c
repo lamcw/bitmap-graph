@@ -6,12 +6,12 @@
 
 /* given n vertices, calculate the size of column of the matrix */
 #ifndef BM_COLSIZE
-#define BM_COLSIZE(nv) ((uint32_t)ceil((double)nv / 32.0f))
+#define BM_COLSIZE(nv) ((uint_t)ceil((double)nv / 32.0f))
 #endif
 
 /* get index of bit in array */
 #ifndef POS
-#define POS(pos) ((uint32_t)floor((double)pos / 32.0f))
+#define POS(pos) ((uint_t)floor((double)pos / 32.0f))
 #endif
 /* get bit offset from right-hand side */
 #ifndef POS_OFFSET
@@ -29,7 +29,7 @@
 
 #ifndef PRINT_WORD
 #define PRINT_WORD(word)				\
-for (uint32_t mask = 1 << 31; mask >= 1; mask >>= 1) {	\
+for (uint_t mask = 1 << 31; mask >= 1; mask >>= 1) {	\
 	printf("%d", word & mask ? 1 : 0);		\
 }							\
 putchar('\n');
@@ -37,16 +37,16 @@ putchar('\n');
 
 struct _graph_t {
 	/* n vertices */
-	uint32_t nv;
+	uint_t nv;
 	/* n edges */
-	uint32_t ne;
+	uint_t ne;
 	/* uint matrix (bitmap) */
 	vertex_t **bm;
 };
 
 /* malloc a graph_t struct and initialize all values in struct, then return a */
 /* pointer to the struct */
-graph_t mkgraph(uint32_t nv) {
+graph_t mkgraph(uint_t nv) {
 	graph_t new = calloc(1, sizeof(struct _graph_t));
 	
 	if (new == NULL) {
@@ -57,11 +57,11 @@ graph_t mkgraph(uint32_t nv) {
 	new->nv = nv;
 	new->bm = calloc(nv, sizeof(vertex_t *));
 
-	for (uint32_t i = 0; i < nv; i++) {
+	for (uint_t i = 0; i < nv; i++) {
 		new->bm[i] = calloc(BM_COLSIZE(nv), sizeof(vertex_t));
 		if (new->bm[i] == NULL) {
 			/* free all previously allocated memory */
-			for (uint32_t j = 0; j < i; j++)
+			for (uint_t j = 0; j < i; j++)
 				free(new->bm[j]);
 			/* error: G_ENOMEM */
 			return NULL;
@@ -115,11 +115,11 @@ static void show_mtrx(graph_t g)
 		return;
 	}
 
-	for (uint32_t i = 0; i < g->nv; i++) {
+	for (uint_t i = 0; i < g->nv; i++) {
 		/* keep track of numbers of bits printed */
-		uint32_t count = 0;
-		for (uint32_t j = 0; j < BM_COLSIZE(g->nv); j++) {
-			for (uint32_t mask = 1 << 31; mask >= 1; mask >>= 1, count++) {
+		uint_t count = 0;
+		for (uint_t j = 0; j < BM_COLSIZE(g->nv); j++) {
+			for (uint_t mask = 1 << 31; mask >= 1; mask >>= 1, count++) {
 				if (count >= g->nv) {
 					break;
 				}
@@ -175,7 +175,7 @@ void destroy_graph(graph_t g) {
 	}
 
 	/* free bitmap rows */
-	for (uint32_t i = 0; i < g->nv; i++) {
+	for (uint_t i = 0; i < g->nv; i++) {
 		free(g->bm[i]);
 	}
 	/* free bitmap */

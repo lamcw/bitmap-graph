@@ -18,6 +18,7 @@
 #define D_READ (1 << 2)	/* human readable format */
 
 typedef uint32_t vertex_t;
+typedef uint32_t uint_t;
 typedef struct _graph_t *graph_t;
 
 /* malloc a graph_t struct and initialize all values in struct, then return a */
