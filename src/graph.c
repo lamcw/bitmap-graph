@@ -119,18 +119,16 @@ static void show_mtrx(graph_t g)
 		/* keep track of numbers of bits printed */
 		uint_t count = 0;
 		for (uint_t j = 0; j < BM_COLSIZE(g->nv); j++) {
-			for (uint_t mask = 1 << 31; mask >= 1; mask >>= 1, count++) {
-				if (count >= g->nv) {
-					break;
-				}
+			uint_t mask = 1U << 31;
+			while (mask >= 1 && count < g->nv) {
 				printf("%d", g->bm[i][j] & mask ? 1 : 0);
 				if (count < g->nv - 1) {
 					/* do not print trailing whitespace */
 					putchar(' ');
 				}
-			}
-			if (count >= g->nv) {
-				break;
+				/* right shift mask bit for next comparison */
+				mask >>= 1;
+				count++;
 			}
 		}
 		putchar('\n');
@@ -141,6 +139,23 @@ static void show_list(graph_t g)
 {
 	if (g == NULL) {
 		return;
+	}
+
+	for (uint_t i = 0; i < g->nv; i++) {
+		printf("%d ->", i);
+		uint_t count = 0;
+		for (uint_t j = 0; j < BM_COLSIZE(g->nv); j++) {
+			uint_t mask = 1U << 31;
+			while (mask >= 1 && count < g->nv) {
+				if (g->bm[i][j] & mask) {
+					/* bit is turned on */
+					printf(" %d ->", count);
+				}
+				mask >>= 1;
+				count++;
+			}
+		}
+		putchar('\n');
 	}
 }
 
