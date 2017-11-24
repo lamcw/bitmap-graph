@@ -22,10 +22,6 @@
 #ifndef VALID_V
 #define VALID_V(g, v) (v < g->nv)
 #endif
-/* check if bit in word is 1 */
-#ifndef CKBIT
-#define CKBIT(word, pos) (word & (1U << pos))
-#endif
 
 #ifndef PRINT_WORD
 #define PRINT_WORD(word)				\
