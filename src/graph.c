@@ -5,23 +5,35 @@
 #include "graph.h"
 
 /* given n vertices, calculate the size of column of the matrix */
-#define BM_COLSIZE(nv) ((int)ceil((double)nv / 32.0f))
+#ifndef BM_COLSIZE
+#define BM_COLSIZE(nv) ((uint32_t)ceil((double)nv / 32.0f))
+#endif
 
 /* get index of bit in array */
-#define POS(pos) ((int)floor((double)pos / 32.0f))
+#ifndef POS
+#define POS(pos) ((uint32_t)floor((double)pos / 32.0f))
+#endif
 /* get bit offset from right-hand side */
+#ifndef POS_OFFSET
 #define POS_OFFSET(pos) (1U << (31 - (pos % 32)))
+#endif
 
 /* check if vertex is valid */
+#ifndef VALID_V
 #define VALID_V(g, v) (v < g->nv)
+#endif
 /* check if bit in word is 1 */
+#ifndef CKBIT
 #define CKBIT(word, pos) (word & (1U << pos))
+#endif
 
+#ifndef PRINT_WORD
 #define PRINT_WORD(word)				\
 for (uint32_t mask = 1 << 31; mask >= 1; mask >>= 1) {	\
 	printf("%d", word & mask ? 1 : 0);		\
 }							\
 putchar('\n');
+#endif
 
 struct _graph_t {
 	/* n vertices */
