@@ -71,6 +71,7 @@ graph_t mkgraph(uint_t nv) {
 	return new;
 }
 
+/* create an edge from vertex @from to vertex @to */
 int mkedge(graph_t g, vertex_t from, vertex_t to) {
 	/* sanity checks */
 	int status = 0;
@@ -90,6 +91,7 @@ int mkedge(graph_t g, vertex_t from, vertex_t to) {
 	return 0;
 }
 
+/* remove the edge from vertex @from to vertex @to */
 int rmedge(graph_t g, vertex_t from, vertex_t to) {
 	/* sanity checks */
 	int status = 0;
@@ -166,6 +168,7 @@ static void show_read(graph_t g)
 	}
 }
 
+/* print matrix to stdout */
 void show_graph(graph_t g, int mode) {
 	for (int mask = 0; mask < 3; mask++) {
 		switch (mode & (1U << mask)) {
@@ -184,6 +187,7 @@ void show_graph(graph_t g, int mode) {
 	}
 }
 
+/* free memory allocated for @g */
 void destroy_graph(graph_t g) {
 	if (g == NULL) {
 		return;

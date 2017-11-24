@@ -24,9 +24,17 @@ typedef struct _graph_t *graph_t;
 /* malloc a graph_t struct and initialize all values in struct, then return a */
 /* pointer to the struct */
 graph_t mkgraph(uint32_t nv);
+
+/* create an edge from vertex @from to vertex @to */
 int mkedge(graph_t g, vertex_t from, vertex_t to);
+
+/* remove the edge from vertex @from to vertex @to */
 int rmedge(graph_t g, vertex_t from, vertex_t to);
+
+/* print matrix to stdout */
 void show_graph(graph_t g, int mode);
+
+/* free memory allocated for @g */
 void destroy_graph(graph_t g);
 
 #endif
