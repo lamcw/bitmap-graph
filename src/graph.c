@@ -23,6 +23,10 @@
 #define VALID_V(g, v) (v < g->nv)
 #endif
 
+#ifndef HAS_EDGE
+#define HAS_EDGE(g, from, to) (g->bm[from][POS(to)] & POS_OFFSET(to) ? 1 : 0)
+#endif
+
 #ifndef PRINT_WORD
 #define PRINT_WORD(word)				\
 for (uint_t mask = 1 << 31; mask >= 1; mask >>= 1) {	\
@@ -107,6 +111,21 @@ int rmedge(graph_t g, vertex_t from, vertex_t to) {
 	return 0;
 }
 
+int has_edge(graph_t g, vertex_t from, vertex_t to)
+{
+	/* sanity checks */
+	if (g == NULL) {
+		/* graph is NULL */
+		return 0;
+	}
+	if (!VALID_V(g, from) || !VALID_V(g, to)) {
+		/* invalid vertices arguments */
+		return 0;
+	}
+
+	return HAS_EDGE(g, from, to);
+}
+
 static void show_mtrx(graph_t g)
 {
 	if (g == NULL) {
@@ -114,19 +133,10 @@ static void show_mtrx(graph_t g)
 	}
 
 	for (uint_t i = 0; i < g->nv; i++) {
-		/* keep track of numbers of bits printed */
-		uint_t count = 0;
-		for (uint_t j = 0; j < BM_COLSIZE(g->nv); j++) {
-			uint_t mask = 1U << 31;
-			while (mask >= 1 && count < g->nv) {
-				printf("%d", g->bm[i][j] & mask ? 1 : 0);
-				if (count < g->nv - 1) {
-					/* do not print trailing whitespace */
-					putchar(' ');
-				}
-				/* right shift mask bit for next comparison */
-				mask >>= 1;
-				count++;
+		for (uint_t j = 0; j < g->nv; j++) {
+			printf("%d", HAS_EDGE(g, i, j));
+			if (j < g->nv - 1) {
+				putchar(' ');
 			}
 		}
 		putchar('\n');
@@ -141,16 +151,9 @@ static void show_list(graph_t g)
 
 	for (uint_t i = 0; i < g->nv; i++) {
 		printf("%d ->", i);
-		uint_t count = 0;
-		for (uint_t j = 0; j < BM_COLSIZE(g->nv); j++) {
-			uint_t mask = 1U << 31;
-			while (mask >= 1 && count < g->nv) {
-				if (g->bm[i][j] & mask) {
-					/* bit is turned on */
-					printf(" %d ->", count);
-				}
-				mask >>= 1;
-				count++;
+		for (uint_t j = 0; j < g->nv; j++) {
+			if (HAS_EDGE(g, i, j)) {
+				printf(" %d ->", j);
 			}
 		}
 		putchar('\n');

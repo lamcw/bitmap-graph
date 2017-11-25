@@ -1,14 +1,17 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <time.h>
+
 #include "../src/graph.h"
 
 int main(void)
 {
-	graph_t g = mkgraph(10);
-	mkedge(g, 1, 2);
-	mkedge(g, 1, 1);
-	mkedge(g, 1, 9);
-	rmedge(g, 1, 9);
-	mkedge(g, 4, 8);
-	mkedge(g, 9, 1);
+	srand(time(NULL));
+	const int size = 50;
+	graph_t g = mkgraph(size);
+	for (int i = 0; i < rand() % 10000; i++) {
+		mkedge(g, rand() % size, rand() % size);
+	}
 	show_graph(g, D_MTRX | D_LIST);
 	destroy_graph(g);
 	return 0;

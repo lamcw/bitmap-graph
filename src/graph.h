@@ -31,6 +31,8 @@ int mkedge(graph_t g, vertex_t from, vertex_t to);
 /* remove the edge from vertex @from to vertex @to */
 int rmedge(graph_t g, vertex_t from, vertex_t to);
 
+int has_edge(graph_t g, vertex_t from, vertex_t to);
+
 /* print matrix to stdout */
 void show_graph(graph_t g, int mode);
 
