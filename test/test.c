@@ -2,13 +2,13 @@
 #include <stdio.h>
 #include <time.h>
 
-#include "../src/graph.h"
+#include "../src/bmgraph.h"
 
 int main(void)
 {
 	srand(time(NULL));
 	const int size = 50;
-	graph_t g = mkgraph(size);
+	bmgraph_t g = mkgraph(size);
 	mkedge(g, 10, 20);
 	mkedge(g, 10, 21);
 	mkedge(g, 10, 22);

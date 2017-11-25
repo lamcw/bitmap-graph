@@ -19,31 +19,31 @@
 
 typedef uint32_t vertex_t;
 typedef uint32_t uint_t;
-typedef struct _graph_t *graph_t;
+typedef struct _bmgraph_t *bmgraph_t;
 
-/* malloc a graph_t struct and initialize all values in struct, then return a */
+/* malloc a bmgraph_t struct and initialize all values in struct, then return a */
 /* pointer to the struct */
-graph_t mkgraph(uint32_t nv);
+bmgraph_t mkgraph(uint32_t nv);
 
 /* create an edge from vertex @from to vertex @to */
-int mkedge(graph_t g, vertex_t from, vertex_t to);
+int mkedge(bmgraph_t g, vertex_t from, vertex_t to);
 
 /* remove the edge from vertex @from to vertex @to */
-int rmedge(graph_t g, vertex_t from, vertex_t to);
+int rmedge(bmgraph_t g, vertex_t from, vertex_t to);
 
 /* check if vertex @from has an edge to @to */
-int has_edge(graph_t g, vertex_t from, vertex_t to);
+int has_edge(bmgraph_t g, vertex_t from, vertex_t to);
 
 /* find the in degree of vertex @v */
-int indegree(graph_t g, vertex_t v);
+int indegree(bmgraph_t g, vertex_t v);
 
 /* find the out degree of vertex @v */
-int outdegree(graph_t g, vertex_t v);
+int outdegree(bmgraph_t g, vertex_t v);
 
 /* print matrix to stdout */
-void show_graph(graph_t g, int mode);
+void show_graph(bmgraph_t g, int mode);
 
 /* free memory allocated for @g */
-void destroy_graph(graph_t g);
+void destroy_graph(bmgraph_t g);
 
 #endif

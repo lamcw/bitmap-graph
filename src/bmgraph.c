@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "graph.h"
+#include "bmgraph.h"
 
 /* given n vertices, calculate the size of column of the matrix */
 #ifndef BM_COLSIZE
@@ -35,7 +35,7 @@ for (uint_t mask = 1 << 31; mask >= 1; mask >>= 1) {	\
 putchar('\n');
 #endif
 
-struct _graph_t {
+struct _bmgraph_t {
 	/* n vertices */
 	uint_t nv;
 	/* n edges */
@@ -44,10 +44,10 @@ struct _graph_t {
 	vertex_t **bm;
 };
 
-/* malloc a graph_t struct and initialize all values in struct, then return a */
+/* malloc a bmgraph_t struct and initialize all values in struct, then return a */
 /* pointer to the struct */
-graph_t mkgraph(uint_t nv) {
-	graph_t new = calloc(1, sizeof(struct _graph_t));
+bmgraph_t mkgraph(uint_t nv) {
+	bmgraph_t new = calloc(1, sizeof(struct _bmgraph_t));
 	
 	if (new == NULL) {
 		/* error: G_ENOMEM */
@@ -72,7 +72,7 @@ graph_t mkgraph(uint_t nv) {
 }
 
 /* create an edge from vertex @from to vertex @to */
-int mkedge(graph_t g, vertex_t from, vertex_t to) {
+int mkedge(bmgraph_t g, vertex_t from, vertex_t to) {
 	/* sanity checks */
 	int status = 0;
 	if (g == NULL) {
@@ -92,7 +92,7 @@ int mkedge(graph_t g, vertex_t from, vertex_t to) {
 }
 
 /* remove the edge from vertex @from to vertex @to */
-int rmedge(graph_t g, vertex_t from, vertex_t to) {
+int rmedge(bmgraph_t g, vertex_t from, vertex_t to) {
 	/* sanity checks */
 	int status = 0;
 	if (g == NULL) {
@@ -112,7 +112,7 @@ int rmedge(graph_t g, vertex_t from, vertex_t to) {
 }
 
 /* check if vertex @from has an edge to @to */
-int has_edge(graph_t g, vertex_t from, vertex_t to)
+int has_edge(bmgraph_t g, vertex_t from, vertex_t to)
 {
 	/* sanity checks */
 	if (g == NULL) {
@@ -128,7 +128,7 @@ int has_edge(graph_t g, vertex_t from, vertex_t to)
 }
 
 /* find the in degree of vertex @v */
-int indegree(graph_t g, vertex_t v)
+int indegree(bmgraph_t g, vertex_t v)
 {
 	if (g == NULL) {
 		return -1;
@@ -150,7 +150,7 @@ int indegree(graph_t g, vertex_t v)
 }
 
 /* find the out degree of vertex @v */
-int outdegree(graph_t g, vertex_t v)
+int outdegree(bmgraph_t g, vertex_t v)
 {
 	if (g == NULL) {
 		return -1;
@@ -171,7 +171,7 @@ int outdegree(graph_t g, vertex_t v)
 	return vcount;
 }
 
-static void show_mtrx(graph_t g)
+static void show_mtrx(bmgraph_t g)
 {
 	if (g == NULL) {
 		return;
@@ -188,7 +188,7 @@ static void show_mtrx(graph_t g)
 	}
 }
 
-static void show_list(graph_t g)
+static void show_list(bmgraph_t g)
 {
 	if (g == NULL) {
 		return;
@@ -205,7 +205,7 @@ static void show_list(graph_t g)
 	}
 }
 
-static void show_read(graph_t g)
+static void show_read(bmgraph_t g)
 {
 	if (g == NULL) {
 		return;
@@ -213,7 +213,7 @@ static void show_read(graph_t g)
 }
 
 /* print matrix to stdout */
-void show_graph(graph_t g, int mode) {
+void show_graph(bmgraph_t g, int mode) {
 	for (int mask = 0; mask < 3; mask++) {
 		switch (mode & (1U << mask)) {
 			case D_MTRX:
@@ -232,7 +232,7 @@ void show_graph(graph_t g, int mode) {
 }
 
 /* free memory allocated for @g */
-void destroy_graph(graph_t g) {
+void destroy_graph(bmgraph_t g) {
 	if (g == NULL) {
 		return;
 	}
