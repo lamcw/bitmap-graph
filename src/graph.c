@@ -111,6 +111,7 @@ int rmedge(graph_t g, vertex_t from, vertex_t to) {
 	return 0;
 }
 
+/* check if vertex @from has an edge to @to */
 int has_edge(graph_t g, vertex_t from, vertex_t to)
 {
 	/* sanity checks */
@@ -124,6 +125,50 @@ int has_edge(graph_t g, vertex_t from, vertex_t to)
 	}
 
 	return HAS_EDGE(g, from, to);
+}
+
+/* find the in degree of vertex @v */
+int indegree(graph_t g, vertex_t v)
+{
+	if (g == NULL) {
+		return -1;
+	}
+
+	if (!VALID_V(g, v)) {
+		return -1;
+	}
+
+	int vcount = 0;
+
+	for (uint_t i = 0; i < g->nv; i++) {
+		if (HAS_EDGE(g, i, v)) {
+			vcount++;
+		}
+	}
+
+	return vcount;
+}
+
+/* find the out degree of vertex @v */
+int outdegree(graph_t g, vertex_t v)
+{
+	if (g == NULL) {
+		return -1;
+	}
+
+	if (!VALID_V(g, v)) {
+		return -1;
+	}
+
+	int vcount = 0;
+
+	for (uint_t i = 0; i < g->nv; i++) {
+		if (HAS_EDGE(g, v, i)) {
+			vcount++;
+		}
+	}
+
+	return vcount;
 }
 
 static void show_mtrx(graph_t g)

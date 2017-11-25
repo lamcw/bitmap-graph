@@ -31,7 +31,14 @@ int mkedge(graph_t g, vertex_t from, vertex_t to);
 /* remove the edge from vertex @from to vertex @to */
 int rmedge(graph_t g, vertex_t from, vertex_t to);
 
+/* check if vertex @from has an edge to @to */
 int has_edge(graph_t g, vertex_t from, vertex_t to);
+
+/* find the in degree of vertex @v */
+int indegree(graph_t g, vertex_t v);
+
+/* find the out degree of vertex @v */
+int outdegree(graph_t g, vertex_t v);
 
 /* print matrix to stdout */
 void show_graph(graph_t g, int mode);
